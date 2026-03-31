@@ -2,8 +2,8 @@ name: Weekly Budget Pipeline
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # Lundi 07:00 UTC = 09:00 Paris été / 08:00 hiver
-  workflow_dispatch:        # Déclenchement manuel depuis GitHub UI
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
 
 jobs:
   run-budget:
@@ -41,26 +41,4 @@ jobs:
           SHEET_STATS: ${{ secrets.SHEET_STATS }}
           SHEET_FILES: ${{ secrets.SHEET_FILES }}
           PAUSE_SECONDS: ${{ secrets.PAUSE_SECONDS }}
-        run: python "Budget.py"
-
-**3. requirements.txt** :
-selenium
-pandas
-python-dotenv
-requests
-openpyxl
-gspread
-google-auth
-google-api-python-client
-webdriver-manager
-beautifulsoup4
-lxml
-
-
-
-
-**4. Fichiers à pusher dans le repo** :
-
-Budget.py
-requirements.txt
-.github/workflows/budget.yml
+        run: python Budget.py
