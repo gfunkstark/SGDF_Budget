@@ -41,7 +41,7 @@ jobs:
           SHEET_STATS: ${{ secrets.SHEET_STATS }}
           SHEET_FILES: ${{ secrets.SHEET_FILES }}
           PAUSE_SECONDS: ${{ secrets.PAUSE_SECONDS }}
-        run: python "NEw Budget.py"
+        run: python "Budget.py"
 ```
 
 ---
