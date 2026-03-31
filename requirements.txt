@@ -1,0 +1,11 @@
+selenium
+pandas
+python-dotenv
+requests
+openpyxl
+gspread
+google-auth
+google-api-python-client
+webdriver-manager
+beautifulsoup4
+lxml
