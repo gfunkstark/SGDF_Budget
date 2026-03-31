@@ -1,0 +1,70 @@
+name: Weekly Budget Pipeline
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Lundi 07:00 UTC = 09:00 Paris été / 08:00 hiver
+  workflow_dispatch:        # Déclenchement manuel depuis GitHub UI
+
+jobs:
+  run-budget:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write service account JSON
+        run: echo '${{ secrets.SGDF_SERVICE_ACCOUNT_FILE_JSON }}' > service_account.json
+
+      - name: Run pipeline
+        env:
+          SGDF_USERNAME: ${{ secrets.SGDF_USERNAME }}
+          SGDF_PASSWORD: ${{ secrets.SGDF_PASSWORD }}
+          SGDF_SERVICE_ACCOUNT_FILE: service_account.json
+          SPREADSHEET_URL: ${{ secrets.SPREADSHEET_URL }}
+          EXPECTED_PERIOD: ${{ secrets.EXPECTED_PERIOD }}
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SHEET_COMPTA: ${{ secrets.SHEET_COMPTA }}
+          SHEET_STATS: ${{ secrets.SHEET_STATS }}
+          SHEET_FILES: ${{ secrets.SHEET_FILES }}
+          PAUSE_SECONDS: ${{ secrets.PAUSE_SECONDS }}
+        run: python "NEw Budget.py"
+```
+
+---
+
+**3. requirements.txt** :
+```
+selenium
+pandas
+python-dotenv
+requests
+openpyxl
+gspread
+google-auth
+google-api-python-client
+webdriver-manager
+beautifulsoup4
+lxml
+```
+
+---
+
+**4. Fichiers à pusher dans le repo** :
+```
+Budget.py
+requirements.txt
+.github/workflows/budget.yml
