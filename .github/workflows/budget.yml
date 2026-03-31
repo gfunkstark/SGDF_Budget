@@ -42,12 +42,8 @@ jobs:
           SHEET_FILES: ${{ secrets.SHEET_FILES }}
           PAUSE_SECONDS: ${{ secrets.PAUSE_SECONDS }}
         run: python "Budget.py"
-```
-
----
 
 **3. requirements.txt** :
-```
 selenium
 pandas
 python-dotenv
@@ -59,12 +55,12 @@ google-api-python-client
 webdriver-manager
 beautifulsoup4
 lxml
-```
 
----
+
+
 
 **4. Fichiers à pusher dans le repo** :
-```
+
 Budget.py
 requirements.txt
 .github/workflows/budget.yml
